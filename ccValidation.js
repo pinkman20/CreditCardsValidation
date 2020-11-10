@@ -23,21 +23,23 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3];
 const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5];
 
 
-// Add your functions below:
+// Validation function check 
 
 const validateCred=(card)=> {
-  let cardInverse = card.slice().reverse()
+  let cardInverse = card.slice().reverse() // copying array and reversing it for easier use of for function
   for (let i = 0; i < cardInverse.length;i++) {
-    if ( i % 2 !=0) {
+    if ( i % 2 !=0) { //separating array to even numbers according to luhn algorithm
       //console.log(cardInverse[i])
       cardInverse[i] = cardInverse[i] * 2 
      // console.log(cardInverse[i])
-      if (cardInverse[i] >9) {
+      if (cardInverse[i] >9) { // if the doubled value is greater than 9 reduce the value by 9
         cardInverse[i] = cardInverse[i] - 9
         //console.log(cardInverse[i])
       }
     }
   }
+
+  // sum all the numbers in array and check modulo of number 10, if modulo is 0 then credit card is valid
   let sum = cardInverse.reduce((a,b)=> a+b,0)
   if (sum %10 === 0) {
     return true
@@ -48,6 +50,8 @@ const validateCred=(card)=> {
 
 console.log(validateCred(valid1))
 
+
+// find invalid cards and push them to invalidCard array
 const findInvalidCards = (cards) =>{
   let invalidCard = [];
   for (let j = 0; j < cards.length; j++) {
@@ -61,7 +65,8 @@ const findInvalidCards = (cards) =>{
 
 console.log(findInvalidCards(batch))
 
-
+// Find companies of invalid credit card numbers. First digit is presented by different company.
+// 3 - Amex, 4 - Visa, 5 - MasterCard, 6 - Discover, else - Company not found
 const idInvalidCardCompanies = (company) => {
   let idInvalid = []
   for (let k = 0; k < company.length;k++) {
